@@ -6,7 +6,7 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 10:11:20 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/08/23 13:38:20 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/09/06 09:24:40 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 
 typedef struct s_philo
 {
-	int	*is_eat;
-	int	*is_sleep;//peut etre remplacer par un seul
-	int	*is_think;
+	int	he_do;
+	int	thr_id;
+	int	lst_eat;
+	pthread_t	philo;
 }	t_philo;
 
 typedef struct s_mutex
@@ -46,11 +47,10 @@ typedef struct s_time
 
 typedef struct s_data
 {
+	t_philo		**philo;
 	t_args		*args;
 	t_mutex		*mutex;
-	t_philo		*philo;
 	t_time		*time;
-	pthread_t	*philos;
 	int		*fork;
 	int		dead;
 	int		time_think;
