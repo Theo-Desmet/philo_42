@@ -6,7 +6,7 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 10:07:22 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/09/05 15:01:22 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/09/07 16:05:52 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <time.h>
 # include <sys/time.h>
 # include "struct.h"
 
@@ -33,8 +32,9 @@ int		ft_atoi(const char *nptr);
 int		ft_calc_service(t_data *data);
 int		ft_calc_time_to_think(t_data *data);
 
-void	*ft_update_time(void *arg);
+long long	ft_update_time(long long init_time);
 long long	ft_get_time(void);
 
+void	*ft_routine(void *arg);
 
 #endif

@@ -6,13 +6,13 @@
 #    By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 08:53:24 by tdesmet           #+#    #+#              #
-#    Updated: 2022/09/05 16:27:19 by tdesmet          ###   ########.fr        #
+#    Updated: 2022/09/07 16:15:30 by tdesmet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -g3 -lpthread -I includes/ -Ofast #-Wall -Werror -Wextra
+CFLAGS = -g3 -pthread -I includes/ -Ofast #-Wall -Werror -Wextra
 
 FILES = $(wildcard philo/*.c) $(wildcard philo/utils/*.c) main.c
 
@@ -22,10 +22,10 @@ NAME = philosopher
 
 %.o: %.c
 	@printf "\033[0;33mCompiling camarade: %-33.33s\r" $@
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c -o $@ $<
 
 $(NAME): $(OBJS)
-	@ $(CC) $(CFLAGS) $(OBJS) -o  $(NAME) 
+	@ $(CC) $(CFLAGS) -lpthread $(OBJS) -o  $(NAME) 
 
 all: $(NAME)
 

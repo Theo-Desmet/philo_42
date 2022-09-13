@@ -6,7 +6,7 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 09:46:50 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/09/06 08:32:50 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/09/07 09:35:01 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,9 @@ long long	ft_get_time(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec * 0.001));
 }
 
-void	*ft_update_time(void *arg)
+long long	ft_update_time(long long init_time)
 {
-	long long	act_time;
-	t_time		*time;
-	int	i;
-
-	i = 0;
-	time = (t_time*)arg;
-	while (1)
-	{
-		if (time->init_time > 0)
-		{
-			act_time = ft_get_time() - time->init_time;
-		}
-		usleep(5000);
-	}
-	return (arg);
+	if (init_time > 0)
+		return (ft_get_time() - init_time);
+	return (0);
 }
