@@ -6,7 +6,7 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 17:02:03 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/09/16 08:55:06 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/09/16 14:57:54 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,18 @@ void ft_is_dead(t_philo *philo)
 {
 	int	time;
 	int	i;
+	pthread_t	monitor;
 
+	pthread_mutex_lock(&philo->data->m_dead);
+	if (philo->data->dead == 1)
+		 return ;
+	pthread_mutex_unlock(&philo->data->m_dead);
 	pthread_mutex_lock(&philo->data->m_dead);
 	philo->data->dead = 1;
 	pthread_mutex_unlock(&philo->data->m_dead);
-	//while (ft_update_time(philo->data->init_time) < philo->lst_eat + philo->data->args->time_live)
-	//	usleep(100);
-	usleep(8000);
+	time = ft_update_time(philo->data->init_time);
 	pthread_mutex_lock(&philo->data->m_print);
+	usleep (8000);
 	printf("%d\t%d is dead\n", time, philo->thr_id);
 	pthread_mutex_lock(&philo->data->m_dead);
 	philo->data->dead = 2;
@@ -33,13 +37,13 @@ void ft_is_dead(t_philo *philo)
 
 int	ft_check_dead(t_philo *philo)
 {
-//	pthread_mutex_lock(&philo->data->m_dead);
-//	if (philo->data->dead == 1)
-//	{
-//		pthread_mutex_unlock(&philo->data->m_dead);
-//		return (0);
-//	}
-//	pthread_mutex_unlock(&philo->data->m_dead);
+	pthread_mutex_lock(&philo->data->m_dead);
+	if (philo->data->dead == 1)
+	{
+		pthread_mutex_unlock(&philo->data->m_dead);
+		return (0);
+	}
+	pthread_mutex_unlock(&philo->data->m_dead);
 	return (1);
 }
 
@@ -102,7 +106,7 @@ int	ft_eat(t_philo *philo)
 	if (!ft_take_fork(philo, philo->thr_id - 1))
 		return (0);
 	if (!ft_print(philo, " has taken a fork"))
-		return (0);
+		return (pthread_mutex_lock(&philo->data->m_fork[philo->thr_id - 1]) , 0);
 	if (!ft_take_fork(philo, philo->thr_id % philo->data->args->nb_philo))
 		return (0);
 	if (!ft_print(philo, " has taken a fork"))
@@ -140,7 +144,7 @@ void	*ft_routine(void *arg)
 		ft_usleep(philo, philo->data->init_time, philo->data->args->time_eat / 2);
 	while (1)
 	{
-		if (!ft_eat(philo) || !ft_sleep(philo))
-			return (0);
+		printf("envie de crever %d", philo->thr_id);
+		return (0);
 	}
 }

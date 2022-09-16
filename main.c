@@ -6,7 +6,7 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 10:06:00 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/09/16 09:20:41 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/09/16 15:28:24 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,37 @@ t_data	*ft_init(t_data *data, int argc, char ** argv)
 		return (NULL);
 	return (data);
 }
+
+void	*ft_monitoring(void *args)
+{
+	t_data	*data;
+
+	data = (t_data *)args;
+	pthread_mutex_lock(&data->m_dead);
+	while (data->dead != 2)
+	{
+		pthread_mutex_unlock(&data->m_dead);
+		usleep(1000);
+		pthread_mutex_lock(&data->m_dead);
+	}
+	pthread_mutex_unlock(&data->m_dead);
+	return (NULL);
+}
+
 int	ft_start(t_data *data)
 {
 	int		i;
+	pthread_t	monitor;;
 
 	i = 0;
 	pthread_mutex_lock(&data->m_start);
 	while (i < data->args->nb_philo)
 	{
-		pthread_create(&(data->philo[i]->philo), NULL, &ft_routine, data->philo[i]);
-		pthread_detach(data->philo[i]->philo);
+		pthread_create(&data->philo[i]->philo, NULL, &ft_routine, data->philo[i]);
 		i++;
 	}
+	pthread_create(&monitor, NULL, &ft_monitoring, data);
+	pthread_join(monitor, NULL);
 	data->init_time = ft_get_time();
 	pthread_mutex_unlock(&data->m_start);
 }
