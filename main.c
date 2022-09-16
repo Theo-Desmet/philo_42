@@ -6,7 +6,7 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 10:06:00 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/09/13 13:39:41 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/09/16 09:20:41 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	ft_init_mutex(t_data *data)
 		i++;
 	}
 	pthread_mutex_init(&data->m_print, NULL);
+	pthread_mutex_init(&data->m_start, NULL);
+	pthread_mutex_init(&data->m_dead, NULL);
 	return (1);
 }
 
@@ -85,6 +87,25 @@ int	ft_start(t_data *data)
 	data->init_time = ft_get_time();
 	pthread_mutex_unlock(&data->m_start);
 }
+
+void	ft_free_data(t_data *data)
+{
+	int	i;
+	
+	i = 0;
+	while (i < data->args->nb_philo)
+	{
+		free(data->philo[i]);
+		pthread_mutex_destroy(&data->m_fork[i]);
+		i++;
+	}
+	free(data->philo);
+	free(data->args);
+	free(data->fork);
+	free(data->m_fork);
+	free(data);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	*data;
@@ -99,6 +120,14 @@ int	main(int argc, char **argv)
 	if (!data->philo)
 		return (0);
 	ft_start(data);
-	while (1)
-		sleep(1);
+	pthread_mutex_lock(&data->m_dead);
+	while (data->dead != 2)
+	{
+		pthread_mutex_unlock(&data->m_dead);
+		usleep(1000);
+		pthread_mutex_lock(&data->m_dead);
+	}
+	pthread_mutex_unlock(&data->m_dead);
+	ft_free_data(data);
+	return (0);
 }

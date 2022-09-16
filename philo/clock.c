@@ -6,7 +6,7 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 09:46:50 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/09/07 09:35:01 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/09/15 07:57:06 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,5 @@ long long	ft_get_time(void)
 
 long long	ft_update_time(long long init_time)
 {
-	if (init_time > 0)
-		return (ft_get_time() - init_time);
-	return (0);
+	return (ft_get_time() - init_time);
 }

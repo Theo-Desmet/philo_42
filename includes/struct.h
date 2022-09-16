@@ -6,7 +6,7 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 10:11:20 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/09/13 13:39:15 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/09/15 11:25:16 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,10 @@ typedef struct s_philo
 	struct s_data	*data;
 }	t_philo;
 
-typedef struct s_time
-{
-	pthread_t	monitoring;
-	long long	init_time;
-}	t_time;
-
 typedef struct s_data
 {
 	t_philo		**philo;
 	t_args		*args;
-	t_time		*time;
 	int		*fork;
 	int		dead;
 	int		nb_service;
@@ -50,6 +43,7 @@ typedef struct s_data
 	pthread_mutex_t *m_fork;
 	pthread_mutex_t m_print;
 	pthread_mutex_t m_start;
+	pthread_mutex_t m_dead;
 }	t_data;
 
 #endif
