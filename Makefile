@@ -6,13 +6,13 @@
 #    By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 08:53:24 by tdesmet           #+#    #+#              #
-#    Updated: 2022/09/16 13:54:59 by tdesmet          ###   ########.fr        #
+#    Updated: 2022/09/19 16:31:31 by tdesmet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -g3 -pthread -I includes/ -Ofast #-fsanitize=address #-Wall -Werror -Wextra
+CFLAGS = -g3 -pthread -I includes/  #-fsanitize=thread #-Wall -Werror -Wextra
 
 FILES = $(wildcard philo/*.c) $(wildcard philo/utils/*.c) main.c
 

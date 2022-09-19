@@ -6,7 +6,7 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 10:06:00 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/09/16 15:28:24 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/09/19 11:24:24 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,7 @@ t_data	*ft_init(t_data *data, int argc, char ** argv)
 
 void	*ft_monitoring(void *args)
 {
-	t_data	*data;
-
-	data = (t_data *)args;
-	pthread_mutex_lock(&data->m_dead);
-	while (data->dead != 2)
-	{
-		pthread_mutex_unlock(&data->m_dead);
-		usleep(1000);
-		pthread_mutex_lock(&data->m_dead);
-	}
-	pthread_mutex_unlock(&data->m_dead);
-	return (NULL);
+	usleep(1000);
 }
 
 int	ft_start(t_data *data)
@@ -95,16 +84,21 @@ int	ft_start(t_data *data)
 	pthread_t	monitor;;
 
 	i = 0;
-	pthread_mutex_lock(&data->m_start);
+	data->init_time = ft_get_time();
 	while (i < data->args->nb_philo)
 	{
 		pthread_create(&data->philo[i]->philo, NULL, &ft_routine, data->philo[i]);
 		i++;
 	}
-	pthread_create(&monitor, NULL, &ft_monitoring, data);
-	pthread_join(monitor, NULL);
-	data->init_time = ft_get_time();
-	pthread_mutex_unlock(&data->m_start);
+	i = 0;
+	while (i < data->args->nb_philo)
+	{
+		pthread_join(data->philo[i]->philo, NULL);
+		i++;
+	}
+	//pthread_create(&monitor, NULL, &ft_monitoring, data);
+	//pthread_join(monitor, NULL);
+	//pthread_mutex_unlock(&data->m_start);
 }
 
 void	ft_free_data(t_data *data)
@@ -139,14 +133,6 @@ int	main(int argc, char **argv)
 	if (!data->philo)
 		return (0);
 	ft_start(data);
-	pthread_mutex_lock(&data->m_dead);
-	while (data->dead != 2)
-	{
-		pthread_mutex_unlock(&data->m_dead);
-		usleep(1000);
-		pthread_mutex_lock(&data->m_dead);
-	}
-	pthread_mutex_unlock(&data->m_dead);
 	ft_free_data(data);
 	return (0);
 }
