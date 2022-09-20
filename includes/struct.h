@@ -6,7 +6,7 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 10:11:20 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/09/15 11:25:16 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/09/20 15:38:38 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_philo
 	int	death;
 	int	he_do;
 	int	thr_id;
+	int	nb_iter;
 	long long	lst_eat;
 	pthread_t	philo;
 	struct s_data	*data;

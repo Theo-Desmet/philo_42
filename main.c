@@ -6,7 +6,7 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 10:06:00 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/09/19 11:24:24 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/09/20 16:08:20 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_philo	**ft_init_philo(t_data *data)
 			return (NULL);
 		data->philo[i]->he_do = 0;
 		data->philo[i]->thr_id = i + 1;
+		data->philo[i]->nb_iter = data->args->iter;
 		data->philo[i]->data = data;
 		i++;
 	}
