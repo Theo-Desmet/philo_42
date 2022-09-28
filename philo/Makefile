@@ -6,19 +6,19 @@
 #    By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 08:53:24 by tdesmet           #+#    #+#              #
-#    Updated: 2022/09/20 15:32:45 by tdesmet          ###   ########.fr        #
+#    Updated: 2022/09/28 10:12:27 by tdesmet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -g3 -pthread -I includes/ #-fsanitize=thread #-Wall -Werror -Wextra
+CFLAGS = -g3 -pthread -I includes/ -Wall -Werror -Wextra #-fsanitize=thread
 
-FILES = $(wildcard philo/*.c) $(wildcard philo/utils/*.c) main.c
+FILES = init.c args.c clock.c routine.c main.c fork.c philo_utils.c utils.c
 
 OBJS = $(FILES:.c=.o)
 
-NAME = philosopher
+NAME = philo
 
 %.o: %.c
 	@printf "\033[0;33mCompiling camarade: %-33.33s\r" $@

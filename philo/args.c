@@ -6,7 +6,7 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 13:41:47 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/08/23 08:29:48 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/09/28 10:06:34 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,21 @@ int	ft_check_digit(char *str)
 
 int	ft_check_is_signed_int(int argc, char **argv)
 {
-	int			i;
-	int	temp;
+	int	i;
 
 	i = 1;
 	while (i < argc)
 	{
 		if (argv[i][0] == '-')
-			return (ft_putstr("Error, negative argument\n"), 0);
-		if (ft_strlen(argv[i]) > 10)
-			return (ft_putstr("Error, argument not integer\n"), 0);
-		if (!ft_is_int(argv[i]))
-			return (ft_putstr("Error, argument not integer\n"), 0);
-		if (!ft_check_digit(argv[i]))
-			return (ft_putstr("Error, argument non digit character\n"), 0);
-		if (argv[i][0] == 0)
-			return (ft_putstr("Error, please dont use 0\n"), 0);
+			return (printf("Error, negative argument\n"), 0);
+		else if (ft_strlen(argv[i]) > 10)
+			return (printf("Error, argument not integer\n"), 0);
+		else if (!ft_is_int(argv[i]))
+			return (printf("Error, argument not integer\n"), 0);
+		else if (!ft_check_digit(argv[i]))
+			return (printf("Error, argument non digit character\n"), 0);
+		else if (argv[i][0] == '0')
+			return (printf("Error, please dont use 0 in args\n"), 0);
 		i++;
 	}
 	return (1);
@@ -81,9 +80,9 @@ int	ft_check_is_signed_int(int argc, char **argv)
 int	ft_check_args(int argc, char **argv)
 {
 	if (argc < 5)
-		return (ft_putstr("Error, too few argument"), 0);
+		return (printf("Error, too few argument\n"), 0);
 	if (argc > 6)
-		return (ft_putstr("Error, too many argument"), 0);
+		return (printf("Error, too many argument\n"), 0);
 	if (!ft_check_is_signed_int(argc, argv))
 		return (0);
 	return (1);
@@ -92,8 +91,8 @@ int	ft_check_args(int argc, char **argv)
 t_args	*ft_get_args(t_data *data, int argc, char **argv)
 {
 	data->args = malloc(sizeof(t_args));
-        if (!data->args)
-                return (NULL);
+	if (!data->args)
+		return (NULL);
 	data->args->nb_philo = ft_atoi(argv[1]);
 	data->args->time_live = ft_atoi(argv[2]);
 	data->args->time_eat = ft_atoi(argv[3]);
