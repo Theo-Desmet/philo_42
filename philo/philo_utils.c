@@ -6,7 +6,7 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 08:54:32 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/09/28 10:07:18 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/10/04 08:13:41 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	ft_usleep(t_philo *philo, long long init_time, int ms)
 	end = time + ms;
 	while (time < end)
 	{
-		if (time > philo->lst_eat + philo->args->time_live)
+		if (ft_check_dead(philo, 0))
 			return (0);
-		usleep(528);
+		usleep(500);
 		time = ft_update_time(init_time);
 	}
 	return (1);

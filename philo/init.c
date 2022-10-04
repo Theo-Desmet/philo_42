@@ -6,7 +6,7 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 08:38:15 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/09/28 10:05:11 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/10/04 09:17:53 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,17 @@ int	ft_init_mutex(t_data *data)
 	data->m_fork = malloc(sizeof(pthread_mutex_t) * data->args->nb_philo);
 	if (!data->m_fork)
 		return (0);
+	data->m_fork = ft_memset(data->m_fork, 0, sizeof(data->m_fork));
 	while (i < data->args->nb_philo)
 	{
-		pthread_mutex_init(&data->m_fork[i], NULL);
+		if (pthread_mutex_init(&data->m_fork[i], NULL))
+			return (0);
 		i++;
 	}
-	pthread_mutex_init(&data->m_print, NULL);
-	pthread_mutex_init(&data->m_dead, NULL);
+	if (pthread_mutex_init(&data->m_print, NULL))
+		return (0);
+	if (pthread_mutex_init(&data->m_dead, NULL))
+		return (ft_free_mutex(data, 1), 0);
 	return (1);
 }
 
@@ -72,6 +76,7 @@ t_data	*ft_init(t_data *data, int argc, char **argv)
 	data->philo = malloc(data->args->nb_philo * sizeof(t_philo));
 	if (!data->philo)
 		return (NULL);
+	data->philo = ft_memset(data->philo, 0, sizeof(data->philo));
 	data->philo = ft_init_philo(data);
 	if (!data->philo)
 		return (0);

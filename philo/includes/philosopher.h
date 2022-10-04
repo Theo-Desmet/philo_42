@@ -6,7 +6,7 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 10:07:22 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/09/28 10:07:43 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/10/04 09:21:02 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,11 @@ int			ft_take_fork(t_philo *philo, int nb_fork);
 int			ft_isdigit(int c);
 int			ft_atoi(const char *nptr);
 int			ft_strlen(char *s);
+void		*ft_memset(void *s, int c, size_t len);
+
+/*		free.c		*/
+void		ft_free_data(t_data *data);
+void		ft_free_philo(t_data *data);
+void		ft_free_mutex(t_data *data, int i);
+
 #endif

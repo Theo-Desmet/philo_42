@@ -6,7 +6,7 @@
 #    By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 08:53:24 by tdesmet           #+#    #+#              #
-#    Updated: 2022/09/28 10:12:27 by tdesmet          ###   ########.fr        #
+#    Updated: 2022/10/04 08:39:25 by tdesmet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = cc
 
 CFLAGS = -g3 -pthread -I includes/ -Wall -Werror -Wextra #-fsanitize=thread
 
-FILES = init.c args.c clock.c routine.c main.c fork.c philo_utils.c utils.c
+FILES = init.c args.c clock.c routine.c main.c fork.c philo_utils.c utils.c free.c
 
 OBJS = $(FILES:.c=.o)
 

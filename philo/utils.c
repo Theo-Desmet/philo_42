@@ -6,7 +6,7 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:39:01 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/09/21 00:23:16 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/10/04 08:28:40 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,22 @@ int	ft_strlen(char *s)
 	while (s[i])
 		i++;
 	return (i);
+}
+
+void	*ft_memset(void *s, int c, size_t len)
+{
+	unsigned char	*ptr;
+	int				i;
+
+	i = 0;
+	ptr = s;
+	c = (unsigned char) c;
+	while (len--)
+	{
+		ptr[i] = c;
+		i++;
+	}
+	return (s);
 }
 
 int	ft_isdigit(int c)
