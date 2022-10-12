@@ -6,13 +6,13 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 10:06:00 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/10/04 08:32:22 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/10/12 09:48:38 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-void	ft_start(t_data *data)
+int	ft_start(t_data *data)
 {
 	int			i;
 
@@ -20,16 +20,25 @@ void	ft_start(t_data *data)
 	data->init_time = ft_get_time();
 	while (i < data->args->nb_philo)
 	{
-		pthread_create(&data->philo[i]->philo,
-			NULL, &ft_routine, data->philo[i]);
+		if (pthread_create(&data->philo[i]->philo,
+				NULL, &ft_routine, data->philo[i]))
+		{
+			data->dead = 1;
+			return (0);
+		}
 		i++;
 	}
 	i = 0;
 	while (i < data->args->nb_philo)
 	{
-		pthread_join(data->philo[i]->philo, NULL);
+		if (pthread_join(data->philo[i]->philo, NULL))
+		{
+			data->dead = 1;
+			return (0);
+		}
 		i++;
 	}
+	return (1);
 }
 
 int	main(int argc, char **argv)
@@ -44,7 +53,8 @@ int	main(int argc, char **argv)
 	data = ft_memset(data, 0, sizeof(t_data));
 	if (!ft_init(data, argc, argv))
 		return (ft_free_data(data), 0);
-	ft_start(data);
+	if (ft_start(data))
+		usleep (5000);
 	ft_free_data(data);
 	return (0);
 }

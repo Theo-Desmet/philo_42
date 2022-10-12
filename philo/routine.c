@@ -6,7 +6,7 @@
 /*   By: tdesmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 17:02:03 by tdesmet           #+#    #+#             */
-/*   Updated: 2022/09/28 10:09:31 by tdesmet          ###   ########.fr       */
+/*   Updated: 2022/10/12 08:00:26 by tdesmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_sleep(t_philo *philo)
 		return (0);
 	if (!ft_print(philo, " is thinking", 0))
 		return (0);
-	usleep(100);
+	usleep(1000);
 	return (1);
 }
 
